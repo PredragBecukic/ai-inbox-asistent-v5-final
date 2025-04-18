@@ -1,9 +1,9 @@
 
-const PAGE_ACCESS_TOKEN = "EAAMZCWNB5DV0BO7lrQJLAN2ZCzncRvCWwkn3uR3j2ZAyN9Hhy8RDhsHHuln9dA9zncnJRYn4FVFX9t4YBP4YowKZAxPrlGbDkRPgbh9DxHy7OagtX0mx92F6m9o0ag1GsEvEOW3Yd0N23Yz2lX8qfH7rh6ejQQ0ZBiZAB7ZCw2y97drW6AYOSOlVUAAvgCX0JDBUj8J8D3c1It3fQbBWgZDZD";
+const PAGE_ACCESS_TOKEN = "EAAMZCWNB5DV0BO9IOI0qqMnEmbBHMRaEUs39ZBhIggqfhL0YRAkoEAVZCPwHjojFhYm1Gx4w80qAUiizrt2x3kZCXo3AmEZBZCUp9ohkF5Mn5aI8eheBnhK0Wb0zSxRk3JBEqqDBM69vnWNnhvZA2H3od1uTCYiiN82SaWgUH2WJqpyDbzSZAMZBHp7sl41yq3LPJZCZCvpcg8TakpccrZCBeqr4ikMZBTZB2IW4eQCzXOxRL7K48ZD";
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
-    const VERIFY_TOKEN = "novi123token";
+    const VERIFY_TOKEN = "cipelarnik123";
 
     const mode = req.query["hub.mode"];
     const token = req.query["hub.verify_token"];
@@ -25,13 +25,12 @@ export default async function handler(req, res) {
         const senderId = event.sender.id;
 
         if (event.message && event.message.text) {
-          const userMessage = event.message.text;
-
+          const userMessage = event.message.text.toLowerCase();
           let reply = "Хвала на поруци! Одговорићемо ускоро. 😊";
 
-          if (userMessage.toLowerCase().includes("цена")) {
+          if (userMessage.includes("цена") || userMessage.includes("cena")) {
             reply = "Цена је 2.500 RSD, а поштарина је 450 RSD.";
-          } else if (userMessage.toLowerCase().includes("број") || userMessage.toLowerCase().includes("size")) {
+          } else if (userMessage.includes("број") || userMessage.includes("broj") || userMessage.includes("size")) {
             reply = "За који модел вас интересује број? Можемо одмах проверити.";
           }
 
