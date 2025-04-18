@@ -1,10 +1,10 @@
+const PAGE_ACCESS_TOKEN = "EAAMZCWNB5DV0BO9IOI0qqMnEmbBHMRaEUs39ZBhIggqfhL0YRAkoEAVZCPwHjojFhYm1Gx4w80qAUiizrt2x3kZCXo3AmEZBZCUp9ohkF5Mn5aI8eheBnhK0Wb0zSxRk3JBEqqDBM69vnWNnhvZA2H3od1uTCYiiN82SaWgUH2WJqpyDbzSZAMZBHp7sl41yq3LPJZCZCvpcg8TakpccrZCBeqr4ikMZBTZB2IW4eQCzXOxRL7K48ZD";
 
-const PAGE_ACCESS_TOKEN = "EAAMZCWNB5DV0BOyYBj1eFKFOxUanZCmE8CJWyxLycWg4rqYlrhlemgwzp8eB4f5D9BcKwvKavCNKeNi04DiIlHWlEjgQ2c4PKxndkgx9DKBvNzV6ZBIxONbk2HsWSvvZBuHsdlv4y62ZALvS0jsGa7l9TmLZBn1JCX0N7Nc41I3GdrF9a8VnJ3TZALPKfAdZB5VXg3uwKLmctZAfouwbZCnUlsHSQZBdXPDq4TOY9sZB";
+const processedMessages = new Set();
 
 export default async function handler(req, res) {
   if (req.method === "GET") {
     const VERIFY_TOKEN = "cipelarnik123";
-
     const mode = req.query["hub.mode"];
     const token = req.query["hub.verify_token"];
     const challenge = req.query["hub.challenge"];
@@ -23,6 +23,14 @@ export default async function handler(req, res) {
       for (const entry of body.entry) {
         const event = entry.messaging[0];
         const senderId = event.sender.id;
+
+        // Anti-spam: ako je poruka već procesuirana, ne odgovaramo ponovo
+        if (event.message && event.message.mid) {
+          if (processedMessages.has(event.message.mid)) {
+            return res.sendStatus(200);
+          }
+          processedMessages.add(event.message.mid);
+        }
 
         if (event.message && event.message.text) {
           const userMessage = event.message.text.toLowerCase();
