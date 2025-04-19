@@ -1,4 +1,5 @@
-const PAGE_ACCESS_TOKEN = "EAAMZCWNB5DV0BO9IOI0qqMnEmbBHMRaEUs39ZBhIggqfhL0YRAkoEAVZCPwHjojFhYm1Gx4w80qAUiizrt2x3kZCXo3AmEZBZCUp9ohkF5Mn5aI8eheBnhK0Wb0zSxRk3JBEqqDBM69vnWNnhvZA2H3od1uTCYiiN82SaWgUH2WJqpyDbzSZAMZBHp7sl41yq3LPJZCZCvpcg8TakpccrZCBeqr4ikMZBTZB2IW4eQCzXOxRL7K48ZD";
+
+const PAGE_ACCESS_TOKEN = "EAAMZCWNB5DV0BO7ZBlfkFedgvwQrFhJQeZCwMJZBh2BgrWug7JRp8z4pgyuqj0GR879ZBUCL0cAxOFrfNsurZAGxTzmU5V4EyM2mTbJKJxgA2XZBuRSURRerOLy5ZCjUL53i4qlXMGpwKUsSdtdv6oUrQ3WLSDHGtlLuDD8x70qZCq2k1mkMJk5LgXQb7IQXdZA20C6fAPbK9DNEVl5GjJ";
 
 const processedMessages = new Set();
 
@@ -24,7 +25,6 @@ export default async function handler(req, res) {
         const event = entry.messaging[0];
         const senderId = event.sender.id;
 
-        // Anti-spam: ako je poruka već procesuirana, ne odgovaramo ponovo
         if (event.message && event.message.mid) {
           if (processedMessages.has(event.message.mid)) {
             return res.sendStatus(200);
